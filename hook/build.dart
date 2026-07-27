@@ -33,6 +33,7 @@ void main(List<String> args) async {
 
     final cmake = await _findCmake();
     final configureArguments = [
+      '--fresh',
       '-S',
       File.fromUri(
         input.packageRoot.resolve('native/CMakeLists.txt'),
@@ -112,6 +113,7 @@ Future<Directory> _sogenSource(BuildInput input) async {
   );
   if (await _hasExpectedCommit(local)) {
     await _updateSubmodules(local);
+    await _ensureFlatbuffersTags(local);
     return local;
   }
 
@@ -138,6 +140,7 @@ Future<Directory> _sogenSource(BuildInput input) async {
     ]);
   }
   await _updateSubmodules(source);
+  await _ensureFlatbuffersTags(source);
   return source;
 }
 
@@ -149,6 +152,31 @@ Future<void> _updateSubmodules(Directory source) => _run('git', [
   '--init',
   '--recursive',
 ]);
+
+Future<void> _ensureFlatbuffersTags(Directory source) async {
+  final flatbuffers = '${source.path}/deps/flatbuffers';
+  final describe = await Process.run('git', [
+    '-C',
+    flatbuffers,
+    'describe',
+    '--tags',
+  ]);
+  if (describe.exitCode != 0) {
+    final shallow = await Process.run('git', [
+      '-C',
+      flatbuffers,
+      'rev-parse',
+      '--is-shallow-repository',
+    ]);
+    await _run('git', [
+      '-C',
+      flatbuffers,
+      'fetch',
+      '--tags',
+      if ((shallow.stdout as String).trim() == 'true') '--unshallow',
+    ]);
+  }
+}
 
 Future<bool> _hasExpectedCommit(Directory directory) async {
   if (!await Directory('${directory.path}/.git').exists()) {
