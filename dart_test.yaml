@@ -1,0 +1,10 @@
+concurrency: 1
+
+tags:
+  native:
+  windowsGuest:
+  linux:
+  unicorn:
+  kvm:
+  requiresCc:
+  requiresNetwork:

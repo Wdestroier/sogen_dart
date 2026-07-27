@@ -1,0 +1,8 @@
+/build/
+/.dart_tool/
+/example/.dart_tool/
+/.packages
+/coverage/
+__pycache__/
+*.pyc
+/example/root/

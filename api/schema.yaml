@@ -1,0 +1,177 @@
+{
+  "abiVersion": 65537,
+  "statuses": {
+    "ok": 0,
+    "invalidArgument": 1,
+    "unavailable": 2,
+    "runtimeError": 3,
+    "badState": 4
+  },
+  "enums": {
+    "backend": {
+      "dartName": "Backend",
+      "values": {"unicorn": 0, "icicle": 1, "whp": 2, "kvm": 3}
+    },
+    "callingConvention": {
+      "dartName": "CallingConvention",
+      "values": {"cdecl": 0, "stdcall": 1, "fastcall": 2, "syscall": 3}
+    },
+    "apiAction": {
+      "dartName": "ApiContinuation",
+      "values": {"runOriginal": 0, "intercept": 1},
+      "aliases": {"skip": "intercept"}
+    },
+    "memoryPermission": {
+      "dartName": "MemoryPermission",
+      "values": {"none": 0, "read": 1, "write": 2, "exec": 4, "readWrite": 3, "readExec": 5, "writeExec": 6, "all": 7},
+      "dartAliases": ["MemoryOperation"]
+    },
+    "memoryRegionKind": {
+      "dartName": "MemoryRegionKind",
+      "values": {"free": 0, "privateAllocation": 1, "fileSectionView": 2, "pagefileSectionView": 3, "sectionImage": 4, "mmio": 5}
+    },
+    "memoryViolationType": {
+      "dartName": "MemoryViolationType",
+      "values": {"unmapped": 0, "protection": 1}
+    },
+    "hookContinuation": {
+      "dartName": "HookContinuation",
+      "values": {"run": 0, "skip": 1, "finalizeRip": 2}
+    },
+    "memoryViolationContinuation": {
+      "dartName": "MemoryViolationContinuation",
+      "values": {"stop": 0, "resume": 1, "restart": 2}
+    },
+    "instruction": {
+      "dartName": "Instruction",
+      "values": {"invalid": 0, "syscall": 1, "cpuid": 2, "rdtsc": 3, "rdtscp": 4}
+    },
+    "register": {
+      "dartName": "Register",
+      "values": {
+        "invalid": 0, "rax": 1, "rbx": 2, "rcx": 3, "rdx": 4, "rsi": 5, "rdi": 6, "rbp": 7, "rsp": 8, "rip": 9,
+        "r8": 10, "r9": 11, "r10": 12, "r11": 13, "r12": 14, "r13": 15, "r14": 16, "r15": 17,
+        "eax": 18, "ebx": 19, "ecx": 20, "edx": 21, "esi": 22, "edi": 23, "ebp": 24, "esp": 25, "eip": 26,
+        "eflags": 27, "rflags": 28, "cs": 29, "ss": 30, "ds": 31, "es": 32, "fs": 33, "gs": 34,
+        "xmm0": 35, "xmm1": 36, "xmm2": 37, "xmm3": 38, "xmm4": 39, "xmm5": 40, "xmm6": 41, "xmm7": 42,
+        "xmm8": 43, "xmm9": 44, "xmm10": 45, "xmm11": 46, "xmm12": 47, "xmm13": 48, "xmm14": 49, "xmm15": 50
+      }
+    },
+    "threadWaitState": {
+      "dartName": "ThreadWaitState",
+      "values": {"running": 0, "futexWait": 1, "sleeping": 2}
+    }
+  },
+  "dartObjects": {
+    "BasicBlock": {"fields": [["int", "address"], ["int", "instructionCount"], ["int", "size"]]},
+    "ExportedSymbol": {"fields": [["String", "name"], ["int", "ordinal"], ["int", "rva"], ["int", "address"]]},
+    "MappedModule": {"fields": [["String", "name"], ["String", "path"], ["String", "modulePath"], ["int", "imageBase"], ["int", "imageBaseFile"], ["int", "sizeOfImage"], ["int", "entryPoint"], ["List<ExportedSymbol>", "exports"], ["bool", "isStatic"]]},
+    "MemoryStats": {"fields": [["int", "reservedMemory"], ["int", "committedMemory"]]},
+    "MemoryRegionInfo": {"fields": [["int", "start"], ["int", "length"], ["MemoryPermission", "permissions"], ["int", "allocationBase"], ["int", "allocationLength"], ["bool", "isReserved"], ["bool", "isCommitted"], ["MemoryPermission", "initialPermissions"], ["MemoryRegionKind", "kind"]]},
+    "WindowsThread": {"fields": [["int", "id"], ["String", "name"], ["int", "startAddress"], ["int", "argument"], ["int", "executedInstructions"], ["int", "currentIp"], ["int", "previousIp"], ["bool", "setupDone"], ["int?", "exitStatus"]]},
+    "LinuxMemoryStats": {"fields": [["int", "regionCount"], ["int", "mappedBytes"], ["int", "executableBytes"]]}
+  },
+  "objects": {
+    "api_call": {"fields": [["const char *", "module_utf8"], ["const char *", "name_utf8"], ["uint64_t", "address"], ["uint64_t", "return_address"], ["uint64_t", "return_value"]]},
+    "buffer": {"fields": [["uint8_t *", "data"], ["size_t", "length"]]},
+    "memory_stats": {"fields": [["uint64_t", "reserved_memory"], ["uint64_t", "committed_memory"]]},
+    "memory_region": {"fields": [["uint64_t", "start"], ["uint64_t", "length"], ["int32_t", "permissions"], ["uint64_t", "allocation_base"], ["uint64_t", "allocation_length"], ["int32_t", "is_reserved"], ["int32_t", "is_committed"], ["int32_t", "initial_permissions"], ["int32_t", "kind"]]},
+    "windows_process_info": {"fields": [["int32_t", "is_wow64_process"], ["int32_t", "has_exit_status"], ["uint32_t", "exit_status"], ["uint64_t", "live_thread_count"], ["uint32_t", "spawned_thread_count"], ["int32_t", "has_active_thread"], ["uint32_t", "active_thread_id"]]},
+    "windows_thread_info": {"fields": [["uint32_t", "id"], ["uint64_t", "start_address"], ["uint64_t", "argument"], ["uint64_t", "executed_instructions"], ["uint64_t", "current_ip"], ["uint64_t", "previous_ip"], ["int32_t", "setup_done"], ["int32_t", "has_exit_status"], ["uint32_t", "exit_status"]]},
+    "exported_symbol": {"fields": [["const uint8_t *", "name_utf8"], ["size_t", "name_length"], ["uint64_t", "ordinal"], ["uint64_t", "rva"], ["uint64_t", "address"]]},
+    "mapped_module": {"fields": [["const uint8_t *", "name_utf8"], ["size_t", "name_length"], ["const uint8_t *", "path_utf8"], ["size_t", "path_length"], ["const uint8_t *", "module_path_utf8"], ["size_t", "module_path_length"], ["uint64_t", "image_base"], ["uint64_t", "image_base_file"], ["uint64_t", "size_of_image"], ["uint64_t", "entry_point"], ["const sogen_dart_exported_symbol *", "exports"], ["size_t", "export_count"], ["int32_t", "is_static"]]},
+    "windows_environment_entry": {"fields": [["const char *", "name_utf8"], ["const char *", "value_utf8"]]},
+    "windows_path_mapping": {"fields": [["const char *", "guest_path_utf8"], ["const char *", "host_path_utf8"]]},
+    "windows_port_mapping": {"fields": [["uint16_t", "emulator_port"], ["uint16_t", "host_port"]]},
+    "windows_emulator_options": {"fields": [["const char *", "emulation_root_utf8"], ["const char *", "registry_directory_utf8"], ["int32_t", "backend"], ["int32_t", "disable_logging"], ["int32_t", "use_relative_time"], ["const sogen_dart_windows_path_mapping *", "path_mappings"], ["size_t", "path_mapping_count"], ["const sogen_dart_windows_port_mapping *", "port_mappings"], ["size_t", "port_mapping_count"], ["uint32_t", "number_of_processors"], ["uint32_t", "nt_product_type"]]},
+    "windows_application_options": {"fields": [["const char *", "application_utf8"], ["const char *const *", "arguments_utf8"], ["size_t", "argument_count"], ["const sogen_dart_windows_environment_entry *", "environment"], ["size_t", "environment_count"], ["const char *", "working_directory_utf8"]]},
+    "linux_memory_stats": {"fields": [["uint64_t", "region_count"], ["uint64_t", "mapped_bytes"], ["uint64_t", "executable_bytes"]]},
+    "linux_process_info": {"fields": [["int32_t", "has_exit_status"], ["int32_t", "exit_status"], ["uint32_t", "pid"], ["uint32_t", "ppid"], ["uint32_t", "uid"], ["uint32_t", "gid"], ["uint32_t", "euid"], ["uint32_t", "egid"], ["uint64_t", "thread_count"], ["int32_t", "has_active_thread"], ["uint32_t", "active_thread_id"]]},
+    "linux_thread_info": {"fields": [["uint32_t", "tid"], ["uint64_t", "stack_base"], ["uint64_t", "stack_size"], ["uint64_t", "fs_base"], ["uint64_t", "current_ip"], ["uint64_t", "start_address"], ["int32_t", "wait_state"], ["int32_t", "setup_done"], ["int32_t", "terminated"], ["int32_t", "exit_code"], ["uint64_t", "executed_instructions"]]},
+    "linux_thread_list": {"listOf": "sogen_dart_linux_thread_info"},
+    "memory_region_list": {"listOf": "sogen_dart_memory_region"},
+    "buffer_list": {"listOf": "sogen_dart_buffer"},
+    "linux_exported_symbol": {"fields": [["sogen_dart_buffer", "name_utf8"], ["uint64_t", "rva"], ["uint64_t", "address"]]},
+    "linux_exported_symbol_list": {"listOf": "sogen_dart_linux_exported_symbol"},
+    "linux_mapped_section": {"fields": [["sogen_dart_buffer", "name_utf8"], ["uint64_t", "start"], ["uint64_t", "length"], ["int32_t", "permissions"]]},
+    "linux_mapped_section_list": {"listOf": "sogen_dart_linux_mapped_section"},
+    "linux_mapped_module": {"fields": [["sogen_dart_buffer", "name_utf8"], ["sogen_dart_buffer", "path_utf8"], ["uint64_t", "image_base"], ["uint64_t", "size_of_image"], ["uint64_t", "entry_point"], ["sogen_dart_linux_exported_symbol_list", "exports"], ["sogen_dart_buffer_list", "needed_libraries"], ["sogen_dart_linux_mapped_section_list", "sections"], ["sogen_dart_buffer", "rpath_utf8"], ["sogen_dart_buffer", "runpath_utf8"]]},
+    "linux_mapped_module_list": {"listOf": "sogen_dart_linux_mapped_module"},
+    "linux_environment_entry": {"fields": [["const char *", "name_utf8"], ["const char *", "value_utf8"]]},
+    "linux_path_mapping": {"fields": [["const char *", "guest_path_utf8"], ["const char *", "host_path_utf8"]]},
+    "linux_port_mapping": {"fields": [["uint16_t", "emulator_port"], ["uint16_t", "host_port"]]},
+    "linux_symbol_call": {"fields": [["uint64_t", "address"], ["uint64_t", "return_address"], ["uint64_t", "return_value"], ["const uint8_t *", "name_utf8"], ["size_t", "name_length"]]},
+    "linux_disassembled_instruction": {"fields": [["uint64_t", "address"], ["size_t", "size"], ["sogen_dart_buffer", "bytes"], ["sogen_dart_buffer", "mnemonic_utf8"], ["sogen_dart_buffer", "operands_utf8"]]},
+    "linux_disassembled_instruction_list": {"listOf": "sogen_dart_linux_disassembled_instruction"},
+    "linux_stack_frame": {"fields": [["uint64_t", "instruction_pointer"], ["uint64_t", "stack_pointer"], ["sogen_dart_buffer", "module_utf8"]]},
+    "linux_stack_frame_list": {"listOf": "sogen_dart_linux_stack_frame"}
+  },
+  "callbacks": {
+    "api_callback": {"return": "sogen_dart_api_action", "parameters": [["void *", "user_data"], ["sogen_dart_api_call *", "call"], ["const uint64_t *", "parameters"], ["size_t", "parameter_count"]]},
+    "execution_callback": {"return": "void", "parameters": [["void *", "user_data"], ["sogen_dart_hook_id", "hook"], ["uint64_t", "address"]]},
+    "memory_callback": {"return": "void", "parameters": [["void *", "user_data"], ["sogen_dart_hook_id", "hook"], ["uint64_t", "address"], ["const uint8_t *", "data"], ["size_t", "length"]]},
+    "instruction_callback": {"return": "int32_t", "parameters": [["void *", "user_data"], ["sogen_dart_hook_id", "hook"], ["uint64_t", "data"]]},
+    "interrupt_callback": {"return": "void", "parameters": [["void *", "user_data"], ["sogen_dart_hook_id", "hook"], ["int32_t", "interrupt_number"]]},
+    "memory_violation_callback": {"return": "int32_t", "parameters": [["void *", "user_data"], ["sogen_dart_hook_id", "hook"], ["uint64_t", "address"], ["size_t", "size"], ["int32_t", "operation"], ["int32_t", "violation_type"]]},
+    "basic_block_callback": {"return": "void", "parameters": [["void *", "user_data"], ["sogen_dart_hook_id", "hook"], ["uint64_t", "address"], ["size_t", "instruction_count"], ["size_t", "size"]]},
+    "module_callback": {"return": "void", "parameters": [["void *", "user_data"], ["const sogen_dart_mapped_module *", "module"]]},
+    "text_callback": {"return": "void", "parameters": [["void *", "user_data"], ["const uint8_t *", "text_utf8"], ["size_t", "text_length"]]},
+    "syscall_callback": {"return": "int32_t", "parameters": [["void *", "user_data"], ["uint32_t", "syscall_id"], ["const uint8_t *", "name_utf8"], ["size_t", "name_length"]]},
+    "generic_access_callback": {"return": "void", "parameters": [["void *", "user_data"], ["const uint8_t *", "type_utf8"], ["size_t", "type_length"], ["const uint8_t *", "name_utf8"], ["size_t", "name_length"]]},
+    "void_callback": {"return": "void", "parameters": [["void *", "user_data"]]},
+    "address_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint64_t", "address"]]},
+    "memory_protect_event_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint64_t", "address"], ["uint64_t", "length"], ["int32_t", "permission"]]},
+    "memory_allocate_event_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint64_t", "address"], ["uint64_t", "length"], ["int32_t", "permission"], ["int32_t", "commit"]]},
+    "memory_violate_event_callback": {"return": "int32_t", "parameters": [["void *", "user_data"], ["uint64_t", "address"], ["uint64_t", "length"], ["int32_t", "operation"], ["int32_t", "violation_type"]]},
+    "ioctrl_callback": {"return": "void", "parameters": [["void *", "user_data"], ["const uint8_t *", "device_name_utf8"], ["size_t", "device_name_length"], ["uint32_t", "code"]]},
+    "thread_create_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint64_t", "handle"], ["uint32_t", "thread_id"], ["uint64_t", "start_address"], ["uint64_t", "argument"]]},
+    "thread_terminated_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint64_t", "handle"], ["uint32_t", "thread_id"]]},
+    "thread_set_name_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint32_t", "thread_id"], ["const uint8_t *", "name_utf8"], ["size_t", "name_length"]]},
+    "thread_switch_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint32_t", "current_thread_id"], ["uint32_t", "new_thread_id"]]},
+    "linux_syscall_callback": {"return": "int32_t", "parameters": [["void *", "user_data"], ["uint64_t", "syscall_id"], ["const uint8_t *", "name_utf8"], ["size_t", "name_length"]]},
+    "linux_signal_callback": {"return": "void", "parameters": [["void *", "user_data"], ["int32_t", "signum"], ["uint64_t", "fault_address"], ["int32_t", "signal_code"]]},
+    "linux_memory_release_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint64_t", "address"], ["uint64_t", "length"]]},
+    "linux_module_callback": {"return": "void", "parameters": [["void *", "user_data"], ["const sogen_dart_linux_mapped_module *", "module"]]},
+    "linux_thread_callback": {"return": "void", "parameters": [["void *", "user_data"], ["const sogen_dart_linux_thread_info *", "thread"]]},
+    "linux_thread_switch_callback": {"return": "void", "parameters": [["void *", "user_data"], ["uint32_t", "old_thread_id"], ["uint32_t", "new_thread_id"]]},
+    "linux_symbol_callback": {"return": "int32_t", "parameters": [["void *", "user_data"], ["sogen_dart_linux_symbol_call *", "call"], ["const uint64_t *", "parameters"], ["size_t", "parameter_count"]]}
+  },
+  "callbackSlots": {
+    "windows": [
+      {"id": 0, "name": "moduleLoad", "field": "module_load", "type": "module_callback"},
+      {"id": 1, "name": "moduleUnload", "field": "module_unload", "type": "module_callback"},
+      {"id": 2, "name": "stdout", "field": "stdout_callback", "type": "text_callback"},
+      {"id": 3, "name": "syscall", "field": "syscall", "type": "syscall_callback"},
+      {"id": 4, "name": "genericAccess", "field": "generic_access", "type": "generic_access_callback"},
+      {"id": 5, "name": "genericActivity", "field": "generic_activity", "type": "text_callback"},
+      {"id": 6, "name": "suspiciousActivity", "field": "suspicious_activity", "type": "text_callback"},
+      {"id": 7, "name": "exception", "field": "exception", "type": "void_callback"},
+      {"id": 8, "name": "instruction", "field": "instruction", "type": "address_callback"},
+      {"id": 9, "name": "memoryProtect", "field": "memory_protect", "type": "memory_protect_event_callback"},
+      {"id": 10, "name": "memoryAllocate", "field": "memory_allocate", "type": "memory_allocate_event_callback"},
+      {"id": 11, "name": "memoryViolate", "field": "memory_violate", "type": "memory_violate_event_callback"},
+      {"id": 12, "name": "rdtsc", "field": "rdtsc", "type": "void_callback"},
+      {"id": 13, "name": "rdtscp", "field": "rdtscp", "type": "void_callback"},
+      {"id": 14, "name": "ioctrl", "field": "ioctrl", "type": "ioctrl_callback"},
+      {"id": 15, "name": "debugString", "field": "debug_string", "type": "text_callback"},
+      {"id": 16, "name": "threadCreate", "field": "thread_create", "type": "thread_create_callback"},
+      {"id": 17, "name": "threadTerminated", "field": "thread_terminated", "type": "thread_terminated_callback"},
+      {"id": 18, "name": "threadSetName", "field": "thread_set_name", "type": "thread_set_name_callback"},
+      {"id": 19, "name": "threadSwitch", "field": "thread_switch", "type": "thread_switch_callback"}
+    ],
+    "linux": [
+      {"id": 0, "name": "stdout", "field": "stdout_callback", "type": "text_callback"},
+      {"id": 1, "name": "stderr", "field": "stderr_callback", "type": "text_callback"},
+      {"id": 2, "name": "syscall", "field": "syscall", "type": "linux_syscall_callback"},
+      {"id": 3, "name": "memoryViolate", "field": "memory_violate", "type": "memory_violate_event_callback"},
+      {"id": 4, "name": "signal", "field": "signal", "type": "linux_signal_callback", "aliases": ["exception"]},
+      {"id": 5, "name": "memoryAllocate", "field": "memory_allocate", "type": "memory_allocate_event_callback"},
+      {"id": 6, "name": "memoryProtect", "field": "memory_protect", "type": "memory_protect_event_callback"},
+      {"id": 7, "name": "memoryRelease", "field": "memory_release", "type": "linux_memory_release_callback"},
+      {"id": 8, "name": "moduleLoad", "field": "module_load", "type": "linux_module_callback"},
+      {"id": 9, "name": "threadCreate", "field": "thread_create", "type": "linux_thread_callback"},
+      {"id": 10, "name": "threadTerminated", "field": "thread_terminated", "type": "linux_thread_callback"},
+      {"id": 11, "name": "threadSwitch", "field": "thread_switch", "type": "linux_thread_switch_callback"}
+    ]
+  }
+}

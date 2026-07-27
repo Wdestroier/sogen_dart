@@ -1,0 +1,7 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  errors:
+    strict_top_level_inference: ignore
+  exclude:
+    - build/**
