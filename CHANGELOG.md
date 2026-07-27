@@ -1,3 +1,7 @@
+## 1.0.1
+
+* Fix CMake cache invalidation and fetch flatbuffers in the build-hook.
+
 ## 1.0.0
 
 * Initial release of the Dart FFI bindings.
